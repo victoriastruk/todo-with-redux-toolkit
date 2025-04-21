@@ -1,7 +1,11 @@
-import React from 'react';
+import Title from './Title';
 
 function Main () {
-  return <div>Main</div>;
+  return (
+    <div>
+      <Title title='Todo App' />
+    </div>
+  );
 }
 
 export default Main;
