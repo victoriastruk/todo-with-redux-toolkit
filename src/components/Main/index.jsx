@@ -1,9 +1,11 @@
-import Title from './Title';
+import FormForTask from './FormForTask';
+import TasksList from './TasksList';
 
 function Main () {
   return (
     <div>
-      <Title title='Todo App' />
+      <FormForTask />
+      <TasksList />
     </div>
   );
 }
