@@ -2,16 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as API from '../../api';
 
 const initialState = {
-  user: [],
+  weather: {},
   isFetching: false,
   error: null,
 };
 
-export const getUserThunk = createAsyncThunk(
-  'user/requestStatus',
-  async (payload, thunkAPI) => {
+export const getWeatherThunk = createAsyncThunk(
+  'weather/requestStatus',
+  async (_, thunkAPI) => {
     try {
-      const { data } = await API.getUser();
+      const { data } = await API.getWeather();
+      console.log('API data:', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: error.message });
@@ -19,26 +20,26 @@ export const getUserThunk = createAsyncThunk(
   }
 );
 
-const userSlice = createSlice({
+const weatherSlice = createSlice({
   initialState,
-  name: 'user',
+  name: 'weather',
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(getUserThunk.pending, state => {
+    builder.addCase(getWeatherThunk.pending, state => {
       state.isFetching = true;
       state.error = null;
     });
-    builder.addCase(getUserThunk.fulfilled, (state, { payload }) => {
-      state.user = payload;
+    builder.addCase(getWeatherThunk.fulfilled, (state, { payload }) => {
+      state.weather = payload;
       state.isFetching = false;
     });
-    builder.addCase(getUserThunk.rejected, (state, { payload }) => {
+    builder.addCase(getWeatherThunk.rejected, (state, { payload }) => {
       state.isFetching = false;
       state.error = payload;
     });
   },
 });
 
-const { reducer } = userSlice;
+const { reducer } = weatherSlice;
 
 export default reducer;

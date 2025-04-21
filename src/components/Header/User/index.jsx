@@ -7,7 +7,6 @@ function User ({ user, isFetching, error, getUser }) {
     getUser();
   }, []);
   const userData = user?.results?.[0];
-  console.log({ user });
   return (
     <>
       {isFetching && <div>Loading...</div>}
