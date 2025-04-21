@@ -108,6 +108,7 @@ section {
 body {
   line-height: 1;
   box-sizing: border-box;
+  background-color: #ebedf0;
 }
 ol,
 ul {
@@ -127,4 +128,11 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }

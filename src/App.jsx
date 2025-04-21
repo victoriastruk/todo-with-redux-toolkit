@@ -1,5 +1,14 @@
+import Header from './components/Header';
+import Main from './components/Main';
+
+import styles from './App.module.sass';
 function App () {
-  return <h1>Header</h1>;
+  return (
+    <div className={styles.container}>
+      <Header />
+      <Main />
+    </div>
+  );
 }
 
 export default App;
