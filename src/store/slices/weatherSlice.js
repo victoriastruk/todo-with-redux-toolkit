@@ -12,7 +12,6 @@ export const getWeatherThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await API.getWeather();
-      console.log('API data:', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: error.message });
