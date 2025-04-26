@@ -28,7 +28,7 @@ function FormForTask () {
     formik.resetForm();
   };
   return (
-    <div>
+    <div className={styles.container}>
       <h1 className={styles.title}>Todo App</h1>
       <Formik
         initialValues={initialValues}
@@ -36,12 +36,18 @@ function FormForTask () {
         onSubmit={onSubmit}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <Field name='task' placeholder='Task' />
-            <ErrorMessage name='task' component='div' />
-            <Field type='date' name='deadline' placeholder='Deadline' />
-            <ErrorMessage name='deadline' component='div' />
-            <button type='submit' disabled={isSubmitting}>
+          <Form className={styles.form}>
+            <div className={styles.inputWrapper}>
+            <div>
+            <Field className={styles.inputTask} name='task' placeholder='Task' />
+            <ErrorMessage className={styles.error} name='task' component='div' />
+            </div>
+            <div>
+            <Field className={styles.inputTask} type='date' name='deadline' placeholder='Deadline' />
+            <ErrorMessage className={styles.error} name='deadline' component='div' />
+            </div>
+            </div>
+            <button className={styles.btn} type='submit' disabled={isSubmitting}>
               Add
             </button>
           </Form>
