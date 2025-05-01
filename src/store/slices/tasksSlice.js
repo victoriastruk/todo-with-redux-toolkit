@@ -1,16 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
+const initialState = [
+  {
+    task: 'Example task',
+    deadline: '2025-04-01',
+    completed: false
+  }
+];
 
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
     addTask: (state, action) => {
-      state.push(action.payload);
+      state.push({
+        ...action.payload,
+        completed: false,
+      });
     },
     toggleTask: (state, action) => {
-      const todo = state[action.index];
+      const todo = state[action.payload];
       if (todo) {
         todo.completed = !todo.completed;
       }

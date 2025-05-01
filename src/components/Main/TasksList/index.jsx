@@ -1,24 +1,35 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask, toggleTask } from '../../../store/slices/tasksSlice';
+import styles from './TasksList.module.sass';
+
 const TasksList = () => {
   const tasks = useSelector(state => state.tasks);
   const dispatch = useDispatch();
+
   return (
-    <ul>
+    <ul className={styles.taskList}>
       {tasks.map((item, index) => (
-        <div key={index}>
-          <li>
+        <div className={styles.taskItem} key={index}>
+          <li
+            className={`${styles.taskText} ${item.completed ? styles.completed : ''} ${item.overdue ? styles.overdue : ''}`}
+          >
             <input
+             className={styles.checkbox}
               type='checkbox'
-              checked={item.completed}
+              checked={!!item.completed}
               onChange={() => {
                 dispatch(toggleTask(index));
               }}
             />
-            {item.task}({item.deadline})
+            {item.task}
           </li>
-          <button onClick={() => dispatch(deleteTask(index))}>Delete</button>
+          <button
+            className={styles.deleteBtn}
+            onClick={() => dispatch(deleteTask(index))}
+          >
+            Delete
+          </button>
         </div>
       ))}
     </ul>

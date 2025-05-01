@@ -1,0 +1,42 @@
+.taskList
+  list-style: none
+  padding: 0 20px
+
+.taskItem
+  display: flex
+  align-items: center
+  justify-content: space-between
+  margin: 15px 0
+
+.taskText
+  font-size: 22px
+  display: flex
+  align-items: center
+  gap: 10px
+
+.checkbox
+  width: 20px
+  height: 20px
+  transform: scale(1.5)
+  cursor: pointer
+
+.completed
+  text-decoration: line-through
+  color: #999
+
+.overdue
+  color: red
+  font-weight: 500
+
+.deleteBtn
+  background-color: #d34d4d
+  color: white
+  border: none
+  padding: 10px 15px
+  border-radius: 5px
+  font-size: 18px
+  cursor: pointer
+  transition: background-color 0.2s ease-in-out
+
+  &:hover
+    background-color: #db2a2a
