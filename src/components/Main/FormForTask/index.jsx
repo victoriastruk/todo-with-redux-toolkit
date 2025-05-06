@@ -1,8 +1,9 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { useDispatch } from 'react-redux';
-import * as yup from 'yup';
+import Input from '../../Input';
 import { addTask } from '../../../store/slices/tasksSlice';
 import styles from './Form.module.sass';
+import { TASK_VALIDATION_SCHEMA } from '../../../utils/validate/taskSchema';
 
 function FormForTask () {
   const dispatch = useDispatch();
@@ -10,19 +11,7 @@ function FormForTask () {
     task: '',
     deadline: '',
   };
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const validationSchema = yup.object({
-    task: yup
-      .string()
-      .min(3, 'Must be 3 characters or more')
-      .trim()
-      .required('Task is required.'),
-    deadline: yup
-      .date()
-      .required('Deadline is required')
-      .min(today, 'Date cannot be in the past'),
-  });
+
   const onSubmit = (values, formik) => {
     dispatch(addTask(values));
     formik.resetForm();
@@ -32,22 +21,20 @@ function FormForTask () {
       <h1 className={styles.title}>Todo App</h1>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={TASK_VALIDATION_SCHEMA}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, isValid, dirty }) => (
           <Form className={styles.form}>
             <div className={styles.inputWrapper}>
-            <div>
-            <Field className={styles.inputTask} name='task' placeholder='Task' />
-            <ErrorMessage className={styles.error} name='task' component='div' />
+              <Input name='task' type='text' placeholder='Task' />
+              <Input name='deadline' type='date' placeholder='Deadline' />
             </div>
-            <div>
-            <Field className={styles.inputTask} type='date' name='deadline' placeholder='Deadline' />
-            <ErrorMessage className={styles.error} name='deadline' component='div' />
-            </div>
-            </div>
-            <button className={styles.btn} type='submit' disabled={isSubmitting}>
+            <button
+              className={styles.btn}
+              type='submit'
+              disabled={isSubmitting || !isValid || !dirty}
+            >
               Add
             </button>
           </Form>

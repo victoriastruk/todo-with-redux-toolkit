@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask, toggleTask } from '../../../store/slices/tasksSlice';
+import classNames from 'classnames';
 import styles from './TasksList.module.sass';
 
 const TasksList = () => {
@@ -9,29 +10,33 @@ const TasksList = () => {
 
   return (
     <ul className={styles.taskList}>
-      {tasks.map((item, index) => (
-        <div className={styles.taskItem} key={index}>
-          <li
-            className={`${styles.taskText} ${item.completed ? styles.completed : ''} ${item.overdue ? styles.overdue : ''}`}
-          >
-            <input
-             className={styles.checkbox}
-              type='checkbox'
-              checked={!!item.completed}
-              onChange={() => {
-                dispatch(toggleTask(index));
-              }}
-            />
-            {item.task}
-          </li>
-          <button
-            className={styles.deleteBtn}
-            onClick={() => dispatch(deleteTask(index))}
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+      {tasks.map((item, index) => {
+        const now = new Date();
+        const taskTextClass = classNames(styles.taskText, {
+          [styles.completed]: item.completed,
+          [styles.overdue]: !item.completed && new Date(item.deadline) < now,
+        });
+
+        return (
+          <div className={styles.taskItem} key={index}>
+            <li className={taskTextClass}>
+              <input
+                className={styles.checkbox}
+                type='checkbox'
+                checked={!!item.completed}
+                onChange={() => dispatch(toggleTask(index))}
+              />
+              {item.task}
+            </li>
+            <button
+              className={styles.deleteBtn}
+              onClick={() => dispatch(deleteTask(index))}
+            >
+              Delete
+            </button>
+          </div>
+        );
+      })}
     </ul>
   );
 };
